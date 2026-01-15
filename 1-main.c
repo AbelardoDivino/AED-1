@@ -1,89 +1,3 @@
-// #include<stdio.h>
-// #include<stdlib.h>
-
-// #define maxtam 3
-
-// typedef int Apontador;
-
-// typedef struct 
-// {
-//     int motos;
-//     int consumo;
-// }tipoitem;
-
-// typedef struct 
-// {
-//     tipoitem motos[maxtam];
-//     tipoitem consumo;
-//     Apontador primeiro;
-//     Apontador ultimo;
-// }tipolista;
-
-// void inicializar(tipolista *l){
-//     l->primeiro = 0;
-//     l->ultimo = 0;
-// }
-
-// void inserir(tipolista *l, tipoitem motos){
-
-// int m1 = 0,m2 = 0,m3 = 0;
-
-//     if (l->ultimo == maxtam)
-//     {
-//         printf("lista cheia nao pode mais enserir\n");
-//     }
-//     else{
-//         printf("digite o consumo das 3 motos respectivamente\n");
-//         scanf("%d %d %d",&m1,&m2,&m3);
-//     }
-    
-//         l->motos[l->ultimo] = motos;
-//         l->ultimo++;
-
-
-// }
-
-// void maiseconomico(tipolista *l, tipoitem consumo){
-
-//     int m = 0;
-
- 
-
-//     for (int i = 0; i < l->ultimo; i++)
-//     {
-//         if (l->motos[i].consumo < m)
-//         {
-//                 m = l->motos[i].consumo;
-//         }
-        
-//         l->motos[i].consumo / 100;
-
-//     }
-//     printf("quilometros pecorridos : %d\n",m/100);
-
-
-
-// }
-
-// int main(){
-
-//     tipolista lista;
-
-//     tipoitem motos;
-
-//     inicializar(&lista);
-
-//     int m1 = 0,m2 = 0,m3 = 0;
-
-//     inserir(&lista, motos);
-//     printf("consumo das motos: %d :%d :%d\n",m1,m2,m3);
-
-//     maiseconomico(&lista, motos);
-
-//     return 0;
-
-// }
-
 #include <stdio.h>
 
 #define maxtam 3
@@ -142,10 +56,19 @@ void consumo100km(tipolista *l) {
 
 int main() {
     tipolista lista;
+    int qtd;
 
     inicializar(&lista);
 
-    for (int i = 0; i < maxtam; i++) {
+    printf("Quantas motos deseja cadastrar? (max %d): ", maxtam);
+    scanf("%d", &qtd);
+
+    if (qtd > maxtam) {
+        printf("Quantidade excede o limite da lista!\n");
+        return 0;
+    }
+
+    for (int i = 0; i < qtd; i++) {
         inserir(&lista);
     }
 
@@ -154,3 +77,4 @@ int main() {
 
     return 0;
 }
+
