@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#define maxtam 100
+#define maxtam 10
 
 typedef int Apontador;
 
@@ -148,6 +148,8 @@ float acimamedia(tipolista *l){
     
     if(!encontrou){
         printf("nao ha vlores acima da media\n");
+        return;
+
     }
 
 }
@@ -178,7 +180,7 @@ void abaixode7(tipolista *l){
   
     for (int i = l->primeiro; i < l->ultimo; i++)
     {
-        if (l->item[i].nota <= m==7)
+        if (l->item[i].nota < 7)
         {
             printf("valor abaixo de 7:%d\n",l->item[i].nota);
             encontrou = 1;
@@ -204,16 +206,16 @@ int main(){
 
     do
     {
-        printf(" 1 para enserir\n");
-        printf("2 quantidade de valores digitados\n");
-        printf("3 para inverter a lista\n");
-        printf("4 Para a soma\n");
-        printf("5 para media\n");
-        printf("6 acima da media\n");
-        printf("7 valores abaixo de 7 ");
-        printf("\n 0 sair\n");
+        printf(" 1 -para enserir:\n");
+        printf("2 - quantidade de valores digitados:\n");
+        printf("3 - para inverter a lista:\n");
+        printf("4 - Para a soma:\n");
+        printf("5 - para media:\n");
+        printf("6 - acima da media:\n");
+        printf("7 - valores abaixo de 7:\n");
+        printf("-1 sair:\n");
         scanf("%d",&opcao);
-           system("cls");
+        system("cls");
 
         switch (opcao)
         {
@@ -258,6 +260,7 @@ int main(){
             return 0;
 
             system("pause");
+            system("cls");
         }
     } while (opcao != -1);
     
