@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 20
+#define maxtam 20
 
 typedef struct {
-    int dados[MAX];
+    int dados[maxtam];
     int frente;
     int tras;
 } Fila;

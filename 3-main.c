@@ -17,6 +17,7 @@ void inicializar(tipolista *l){
 }
 
 void inserir(tipolista *l, int v){
+    
     int i;
 
     if (l->ultimo >= maxtam) {

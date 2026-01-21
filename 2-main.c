@@ -62,7 +62,7 @@ void inverte(tipolista *l){
   }
   else{
      
-    for (int  i = l->ultimo; i >= l->primeiro; i--)
+    for (int  i = l->ultimo - 1; i >= l->primeiro; i--)
     {
         printf("%d\n", l->item[i].nota);
     }
