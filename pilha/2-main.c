@@ -36,12 +36,16 @@ void procurar(tipopilha *p, int c){
         printf("pilha vazia\n");
         return;
     }
-    else{
-        for (int i = 0; i < p->topo; i++)
+
+    int achou = 0;
+    
+        for (int i = 0; i <= p->topo; i++)
         {
             if (p->codigo[i] == c)
             {
-                printf("valor encontrado foi %d\n",p->codigo[i]);
+                printf("valor encontrado foi %d\n",c);
+                achou = 1;
+                break;
             }
             else{
                 printf("erro valor nao encontrado\n");
@@ -50,7 +54,6 @@ void procurar(tipopilha *p, int c){
         }
         
     }
-}
 
 int main(){
 
@@ -74,7 +77,7 @@ int main(){
         
 
         case 2:
-        printf("digite os valores para sereminseridos\n");
+        printf("digite o valor para procurar \n");
         scanf("%d",&c);
         procurar(&pilha,c);
         break;

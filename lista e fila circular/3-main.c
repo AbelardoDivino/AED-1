@@ -2,73 +2,102 @@
 #include<stdlib.h>
 
 #define maxtam 10
-
 typedef int Apontador;
 
-typedef struct {
-    int valor[maxtam];
-    Apontador primeiro;
-    Apontador ultimo;
-} tipolista;
+typedef struct 
+{
+int codigo[maxtam];
+Apontador ultimo;
+}tipolista;
 
 void inicializar(tipolista *l){
-    l->primeiro = 0;
-    l->ultimo = 0;
+l->ultimo=0;
 }
 
-void inserir(tipolista *l, int v){
-    
-    int i;
+void inserir(tipolista *l, int c){
 
-    if (l->ultimo >= maxtam) {
-        printf("Lista esta cheia\n");
+
+
+    if (l->ultimo >= maxtam)
+    {
+        printf("fila cheia\n");
         return;
     }
 
-    i = l->primeiro;
+          int posicao = 0;
+    
+        while (posicao < l->ultimo && l->codigo[posicao] < c)
+        {
+            posicao++;
+            //encontrar a posiçao correta
+        }
+        
 
-    // encontra posição
-    while (i < l->ultimo && l->valor[i] < v) {
-        i++;
+        for (int i = l->ultimo - 1; i >= posicao; i--)
+        {
+            l->codigo[i + 1] = l->codigo[i]; // deslocar para a direite
+        }
+        l->codigo[posicao] = c;
+        l->ultimo++;
     }
+  
 
-    // desloca para a direita
-    for (int j = l->ultimo; j > i; j--) {
-        l->valor[j] = l->valor[j - 1];
+
+void listar(tipolista *l){
+
+    if (l->ultimo == 0)
+    {
+        printf("vazia\n");
+        return;
     }
-
-    l->valor[i] = v;
-    l->ultimo++;
+    
+else{
+    
+    for (int i = 0; i < l->ultimo; i++)
+    {
+        printf(":%d\n",l->codigo[i]);
+          if (i < l->ultimo - 1)
+            printf(" ,"); 
+    }
+    
 }
 
-void imprimir(tipolista *l) {
-    printf("\nLista ordenada: ");
-    for (int i = l->primeiro; i < l->ultimo; i++) {
-        printf("%d ", l->valor[i]);
-    }
-    printf("\n");
 }
 
 int main(){
+
     tipolista lista;
-    int p, opcao;
 
     inicializar(&lista);
 
-    do {
 
-         printf("Digite 0 para sair ou 1 para continuar: ");
-        scanf("%d", &opcao);
+    int c,opcao;
+ 
 
-        printf("\nDigite um valor: ");
-        scanf("%d", &p);
 
-        inserir(&lista, p);
-        imprimir(&lista);
+    do
+    {
+        printf("1 para enserir\n");
+        printf("0 - sair\n");
+        scanf("%d",&opcao);
+        switch (opcao)
+        {
+        case 1:
+            printf("enserir os codigos\n");
+            scanf("%d",&c);
+            inserir(&lista,c);
 
-       
+            listar(&lista);
 
+
+            break;
+        
+        default:
+            break;
+        }
+        
     } while (opcao != 0);
+    
 
     return 0;
 }

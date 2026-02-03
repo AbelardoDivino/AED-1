@@ -1,80 +1,137 @@
-#include <stdio.h>
-
+#include<stdio.h>
+#include<stdlib.h>
 #define maxtam 3
 
-typedef struct {
+typedef int Apontador;
+
+typedef struct 
+{
+    int consumo;
     int modelo;
-    int consumo; // km por litro
-} tipoitem;
+}tipomoto;
 
-typedef struct {
-    tipoitem motos[maxtam];
-    int ultimo;
-} tipolista;
+typedef struct 
+{
+    tipomoto item[maxtam];
+    Apontador primeiro;
+    Apontador ultimo;
+}tipolista;
 
-void inicializar(tipolista *l) {
-    l->ultimo = 0;
+
+void inicializar(tipolista *l){
+l->primeiro = 0;
+l->ultimo =0;
 }
 
-void inserir(tipolista *l) {
-    if (l->ultimo == maxtam) {
-        printf("Lista cheia!\n");
+void inserir(tipolista *l){
+
+    if (l->ultimo >= maxtam)
+    {
+        printf("lista cheia nao pode mais inserir\n");
         return;
     }
+    else{
 
-    printf("Digite o modelo da moto: ");
-    scanf("%d", &l->motos[l->ultimo].modelo);
+        tipomoto item;
 
-    printf("Digite o consumo (km por litro): ");
-    scanf("%d", &l->motos[l->ultimo].consumo);
+        printf("digite o modelo da moto\n");
+        scanf("%d",&item.modelo);
 
-    l->ultimo++;
+        printf("digite o consumo de 3 modelos de motos \n");
+        scanf("%d",&item.consumo);
+       
+
+        l->item[l->ultimo] = item;
+        l->ultimo++;
+
+   
+
+    }
+    
 }
 
-void maiseconomico(tipolista *l) {
-    int indice = 0;
+void maiseconomico(tipolista *l){
 
-    for (int i = 1; i < l->ultimo; i++) {
-        if (l->motos[i].consumo > l->motos[indice].consumo) {
-            indice = i;
+    if (l->ultimo == l->primeiro)
+    {
+        printf("lista esta vazia\n");
+        return;
+    }
+    else{
+        int indice = l->primeiro;
+        for (int i = l->primeiro + 1; i < l->ultimo; i++)
+        {
+            if (l->item[i].consumo < l->item[indice].consumo)
+            {
+                indice = i;
+            }
+            
         }
-    }
-
-    printf("\nMoto mais economica:\n");
-    printf("Modelo: %d\n", l->motos[indice].modelo);
-}
-
-void consumo100km(tipolista *l) {
-    printf("\nConsumo para percorrer 100 km:\n");
-
-    for (int i = 0; i < l->ultimo; i++) {
-        float litros = 100.0 / l->motos[i].consumo;
-        printf("Moto modelo %d: %.2f litros\n",
-               l->motos[i].modelo, litros);
+        printf("modelo de moto mais economica:%d\n",l->item[indice].modelo);
+        printf("o consumo da moto mais economica:%d\n", l->item[indice].consumo);
     }
 }
 
-int main() {
-    tipolista lista;
-    int qtd;
+void consumo100(tipolista *l){
 
-    inicializar(&lista);
-
-    printf("Quantas motos deseja cadastrar? (max %d): ", maxtam);
-    scanf("%d", &qtd);
-
-    if (qtd > maxtam) {
-        printf("Quantidade excede o limite da lista!\n");
-        return 0;
+    if (l->ultimo == l->primeiro)
+    {
+        printf("lista vazia");
+        return;
     }
+    else{
+        for (int i = l->primeiro; i < l->ultimo; i++)
+        {
+          float litros = 100.0 / l->item[i].consumo;
+            printf("combustivel gasto em 100km :%d, %.2f\n",l->item[i].modelo, litros);
+            
+        }
+      
+    }
+    
 
-    for (int i = 0; i < qtd; i++) {
+}
+
+
+int main(){
+
+tipolista lista;
+inicializar(&lista);
+
+int opcao;
+
+do
+{
+    printf("1 para inserir\n");
+    printf("2 para mais economico\n");
+    printf(" 3 -consumo em 100 km \n");
+    printf(" 0 sair\n");
+    scanf("%d",&opcao);
+printf("s\n");
+ system("cls");
+    switch (opcao)
+    {
+    case 1:
         inserir(&lista);
+        break;
+    
+    case 2:
+        maiseconomico(&lista);
+    break;
+
+
+    case 3:
+        consumo100(&lista);
+    break;
+    default:
+    printf("encerrando\n");
+        break;
     }
+    
+} while (opcao != 0);
 
-    maiseconomico(&lista);
-    consumo100km(&lista);
 
-    return 0;
+
+return 0;
 }
 

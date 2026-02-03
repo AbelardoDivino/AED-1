@@ -3,125 +3,151 @@
 
 #define maxtam 10
 
-
 typedef int Apontador;
-
-typedef  struct 
-{
-    float nota;
-    
-}tipoitem;
 
 typedef struct 
 {
-tipoitem nota[maxtam];
-Apontador primeiro;
-Apontador ultimo;
-
+    int nota[maxtam];
+    Apontador primeiro;
+    Apontador ultimo;
 }tipolista;
 
-
 void inicializar(tipolista *l){
-    l->primeiro = 0;
-    l->ultimo = 0;
+l->primeiro=0;
+l->ultimo=0;
 }
 
-void inserir(tipolista *l, tipoitem nota){
+void inserir(tipolista *l, int n){
 
-    if (l->ultimo == maxtam)
+    if (l->ultimo >= maxtam)
     {
-        printf("lista esta cheia \n");
+        printf("lista cheia \n");
+        return;
     }
     else{
-        l->nota[l->ultimo] = nota;
+        l->nota[l->ultimo] = n;
         l->ultimo++;
     }
-
 }
 
-void remover(tipolista *l, tipoitem nota){
+void remover(tipolista *l){
 
-    if(l->primeiro == l->ultimo){
-        printf("lista esta vazia \n");
+    if (l->ultimo == l->primeiro)
+    {
+        printf("lista vazia\n");
+        return;
     }
     else{
-        l->nota[l->primeiro] = nota;
-        l->primeiro++;
+        for (int i = l->primeiro; i < l->ultimo; i++)
+        {
+            l->nota[i] = l->nota[i + 1]; 
+        }
+        
+            l->ultimo--;
     }
+    
+    // else{
+    //     l->nota[l->ultimo] = n;
+    //     l->ultimo--;
+    // }
 
 }
 
 void media(tipolista *l){
 
-    float soma = 0;
-    float media = 0;
+    int s = 0;
+    float m = 0;
 
-    for (int i = l->primeiro; i < l->ultimo; i++)
+    if (l->ultimo == l->primeiro)
     {
-        soma += l->nota[i].nota;
-        media = soma / (l->ultimo - l->primeiro);
-    }
-    printf(" A  media das notas e: %.2f\n", media);
-}
-
-void menormenor(tipolista *l){
-
-    float menor = l->nota[l->primeiro].nota;
-    float maior = l->nota[l->primeiro].nota;
-
-    for (int i = l->primeiro; i < l->ultimo; i++)
-    {
-        if (l->nota[i].nota < menor)
-        {
-            menor = l->nota[i].nota;
-        }
-        
-        else if(l->nota[i].nota > maior){
-            maior = l->nota[i].nota;
-        }
-
+        printf("erro lista vazia\n");
+        return;
     }
     
-    printf(" O menor valor e: %.2f\n", menor);
-    printf(" O maior valor e: %.2f\n", maior);
+
+    for (int i = l->primeiro; i < l->ultimo; i++)
+    {
+        s += l->nota[i];
+        m = (float) s / (l->ultimo - l->primeiro);
+    }
+    printf(" a media e: %.2f\n",m);
+
+}
+void maior(tipolista *l){
+
+    int m = 0;
+
+    if (l->ultimo == l->primeiro)
+    {
+        printf("lista vazia\n");
+        return;
+    }
+    else{
+        for (int i = l->primeiro; i < l->ultimo; i++)
+        {
+            if (l->nota[i] > m )
+            {
+                m  = l->nota[i];
+            }
+            
+        }
+        printf("A maior nota e: %d\n",m);
+    }
+    
+
+}
+
+void menor(tipolista *l){
+
+    int mneo;
+
+    if (l->ultimo == l->primeiro)
+    {
+        printf("lista vazia\n");
+        return;
+    }
+    else{
+        for (int i = l->primeiro; i < l->ultimo; i++)
+        {
+            if (l->nota[i] < mneo)
+            {
+                mneo = l->nota[i];
+            }
+            
+        }
+        printf(" o menor valor e: %d\n",mneo);
+    }
 
 }
 
 int main(){
 
-    int opcao;
-    float n;
-
-
-    tipoitem nota;
-
     tipolista lista;
-
     inicializar(&lista);
+
+    int opcao,n;
 
     do
     {
-        printf("\n1 pare enserir\n");
-        printf("2 para remover\n");
-        printf("3 para calcular a media\n");
-        printf("4 para mostrar o menor e o maior valor\n");
-        printf("0 para sair\n");
+        printf("1 para inseirir\n");
+        printf(" 2 - remover\n");
+        printf(" 3 - media\n");
+        printf(" 4 - maior valor\n");
+        printf(" 5 - menor nota\n");
+        printf("0 - sair\n");
         scanf("%d",&opcao);
-
         switch (opcao)
         {
         case 1:
-                printf("digite as notas:");
-                scanf("%f",&n);
-                nota.nota = n;
-                inserir(&lista,nota);
+            printf(" digite 10 valores\n");
+            scanf("%d",&n);
+            inserir(&lista,n);
         break;
 
         case 2:
-            printf("digite a nota para ser removida:\n");
-            scanf("%f",&n);
-            nota.nota = n;
-            remover(&lista,nota);
+            printf("digite um valor para ");
+
+            remover(&lista);
         break;
 
         case 3:
@@ -129,16 +155,19 @@ int main(){
         break;
 
         case 4:
-            menormenor(&lista);
+            maior(&lista);
+        break;
+
+        case 5:
+            menor(&lista);
         break;
         
         default:
-        printf("encerrando o programa\n");
-            break;
+        printf("Encerrando\n");
+        break;
         }
     } while (opcao != 0);
     
 
     return 0;
-
 }

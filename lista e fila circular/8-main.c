@@ -1,109 +1,96 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#define maxtam 20
+#define maxtam 3
 
-typedef  int Apontador;
+typedef int Apontador;
+
 
 typedef struct 
 {
-    int pessoas[maxtam];
-    Apontador frente;
-    Apontador tras;
-    int qnt;
+    int cliente[maxtam];
+    Apontador ultimo;
+    Apontador primeiro;
 }tipofila;
 
 
 void inicializar(tipofila *f){
-
-    f->frente = 0;
-    f->tras = 0;
-    f->qnt = 0;
+f->primeiro=0;
+f->ultimo=0;
 }
 
-void inserir(tipofila *f, int pessoas){
+void inserir(tipofila *f, int n){
 
-    if (f->qnt >= maxtam)
+    if ((f->ultimo + 1) % maxtam == f->primeiro)
     {
-        printf("fila esta cheia\n");
+        printf("fila cheia\n");
         return;
     }
     else{
-        f->pessoas[f->tras] = pessoas;
-        f->tras = (f->tras + 1) % maxtam;
-        f->qnt++;
+        f->cliente[f->ultimo] = n;
+        f->ultimo = (f->ultimo + 1) % maxtam;
     }
-    
 
 }
 
-void atender(tipofila *f){
+void remover(tipofila *f){
 
-    if (f->qnt == 0)
+    if (f->ultimo  == f->primeiro)
     {
-        printf("fila esta vazia ERRO\n");   
+        printf("fila vaiza");
         return;
     }
     else{
-       printf(" Atendendo cliente:%d\n", f->pessoas[f->frente]);
-       f->frente = (f->frente  + 1) % maxtam;
-       f->qnt--;
+        f->primeiro = (f->primeiro + 1) % maxtam;
     }
 
 }
 
 void proximo(tipofila *f){
 
-    if(f->qnt == 0){
-        printf("fila vazia Erro\n");
+    if (f->primeiro == f->ultimo)
+    {
+        printf("fila vazia\n");
     }
     else{
-            printf("o proximo sera: %d\n", f->pessoas[f->frente]);
+        printf(" o proximo sera: %d\n",f->cliente[f->primeiro ]);
     }
-
+    
 
 }
-
 int main(){
 
     tipofila fila;
-
     inicializar(&fila);
 
-    int p, opcao;
-
-
+int opcao,n;
     do
     {
-        printf("1 -digite um para enserir\n");
-        printf("2 para atender\n");
-        printf("3 para o proximo \n");
+        printf("1 enserir\n");
+        printf("2 - remover\n");
+        printf("3 - proximo\n");
         scanf("%d",&opcao);
-        
         switch (opcao)
         {
         case 1:
-            printf("digite as pessoas para cadastrar\n");
-            scanf("%d",&p);
-            inserir(&fila,p);
-        break;
+            printf("digite os valores\n");
+            scanf("%d",&n);
+            inserir(&fila,n);
+            break;
+
+            case 2:
+            remover(&fila);
+            break;
+
+            case 3:
+            proximo(&fila);
+            break;
         
-        case 2:
-        atender(&fila);
-        break;
-    
-    case 3:
-                proximo(&fila);
-    break;
-
-
         default:
-        printf("encerrando o programa\n");
             break;
         }
-
-    } while (opcao !=0);
+    } while (opcao != 0);
     
-    return 0;
 
+    return 0;
 }

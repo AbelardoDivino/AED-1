@@ -1,133 +1,141 @@
 #include<stdio.h>
 #include<stdlib.h>
-
 #define maxtam 10
-
-typedef  int Apontador;
-
-typedef struct 
-{
-    int item;
-}tipoitem;
-
+typedef int Apontador;
 
 typedef struct 
 {
-    tipoitem item[maxtam];
+    int valor[maxtam];
     Apontador primeiro;
     Apontador ultimo;
 }tipolista;
 
 void inicializar(tipolista *l){
-    l->primeiro = 0;
-    l->ultimo = 0;
+l->primeiro=0;
+l->ultimo=0;
 }
 
-void inserir(tipolista  *l, tipoitem item){
+void inserir(tipolista *l, int v){
 
-    if (l->ultimo == maxtam)
+    if (l->ultimo >= maxtam)
     {
-        printf("lista cheia\n");
+        printf("lista cheia \n");
+        return;
     }
     else{
-        l->item[l->ultimo] = item;
+        l->valor[l->ultimo] = v;
         l->ultimo++;
     }
-
 }
 
-void maior(tipolista *l)
-{
+void maior(tipolista *l){
 
-    float maior = l->item[l->primeiro].item;
+    int m = l->valor[l->primeiro];
 
-    if (l->primeiro == l->ultimo)
+    if (l->ultimo == l->primeiro)
     {
         printf("lista vazia\n");
+        return;
     }
     else{
-        for (int i = l->primeiro; i < l->ultimo; i++)
+        for (int i = l->primeiro;  l->ultimo ; i++)
         {
-            if (l->item[i].item > maior)
-            {
-                maior = l->item[i].item;
-            }
+          if (l->valor[i] > m)
+          {
+            m = l->valor[i];
+          }
             
         }
-        
-         printf("o maior valor e: %.2f\n", maior);
-    }
+        printf("o maior valor e: %d\n",m);
+  }
     
 
 }
+
 
 void menor(tipolista *l){
+         int m = l->valor[l->primeiro];
 
-    if (l->primeiro == l->ultimo)
-    {
-        printf("lista esta vazia\n");
-    }
-    else{
-        float menor = l->item[l->primeiro].item;
-
-        for (int i = l->primeiro; i < l->ultimo; i++)
-        {
-            if (l->item[i].item < menor)
-            {
-                menor = l->item[i].item;
-        
-            }
-            
-        }
-          printf("o menor valor e: %.2f\n", menor);
-    }
-    
-
-}
-
-void media(tipolista * l){
-
-    float m = 0;
-    int s = 0;
-
-    if (l->primeiro == l->ultimo)
+    if (l->ultimo == l->primeiro)
     {
         printf("lista vazia\n");
+        return;
     }
     else{
-        for (int i = l->primeiro; i < l->ultimo; i++)
+        for (int i = l->primeiro;  i< l->ultimo ; i++)
         {
-            s += l->item[i].item;
-            m = s / l->ultimo;
+          if (l->valor[i] < m)
+          {
+            m = l->valor[i];
+          }
+            
         }
-        
-        printf(" A media e: %.2f\n",m);
-
-    }
-    
+        printf("o menor valor e: %d\n",m);
+  }
 
 }
 
-  int main() {
-    tipolista lista;
-    tipoitem item;
-    int n;
+void media(tipolista *l){
 
+    int s = 0;
+    int m = 0;
+
+    if (l->ultimo  == l->primeiro)
+    {
+        printf("lista vazia\n");
+        return;
+    }
+    else{
+         for (int i = l->primeiro; i < l->ultimo; i++)
+    {
+        s += l->valor[i];
+        m = s / (l->ultimo - l->primeiro);
+    }
+    printf("a media e:%d\n", m);
+    }
+}
+
+int main(){
+
+    tipolista lista;
     inicializar(&lista);
 
-    printf("Digite os 10 valores inteiros:\n");
+    int opcao,n;
 
-    for (int i = 0; i < maxtam; i++) {
-        scanf("%d", &n);
-        item.item = n;
-        inserir(&lista, item);
-    }
+    do
+    {
+        printf(" 1 - para inserir\n");
+        printf(" 2 - para maior\n");
+        printf(" 3 - menor");
+        printf(" 4 - media\n");
+        printf(" 0 - sair\n");
+        scanf(&opcao);
+        switch (opcao)
+        {
+        case 1:
+            printf("digite os valores \n");
+            scanf("%d",&n);
+            inserir(&lista,n);
+    break;
+    
+    case 2:
+            maior(&lista);
+    break;
 
+    case 3:
+            menor(&lista);
+    break;
 
-    maior(&lista);
+    case 4:
+            media(&lista);
+    break;
 
-    menor(&lista);
+        default:
+        printf("encerrando\n");
+            break;
+        }
+    } while (opcao != 0);
+    
 
-    media(&lista);
-
+    return 0;
 }
